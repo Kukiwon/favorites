@@ -94,6 +94,12 @@ class Dependencies
 	public function frontendScripts()
 	{
 		if ( !$this->settings_repo->outputDependency('js') ) return;
+
+		$dashboard_page_id = get_field('link-dashboard', 'options');
+		if(!is_page(array($dashboard_page_id)) && !is_singular('session')) {
+			return false;
+		}
+
 		$file = ( $this->settings_repo->devMode() ) ? 'favorites.js' : 'favorites.min.js';
 		wp_enqueue_script(
 			'favorites', 
